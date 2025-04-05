@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -29,12 +30,21 @@ const Index = () => {
         </div>
         <div className="md:w-1/2">
           <div className="relative">
-            <div className="bg-compass-100 rounded-xl p-6 relative z-10">
-              <img 
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKMyA9BLkZgoHUszWAZcZyFwEJJZOM0EuHIA&s" 
-                alt="IIIT Vadodara Logo" 
-                className="rounded-lg shadow-lg mx-auto"
-              />
+            <div className="bg-compass-100 rounded-xl p-8 relative z-10 shadow-lg border border-compass-200 transform transition-all duration-300 hover:translate-y-[-5px] hover:shadow-xl">
+              <div className="flex justify-center">
+                <div className="relative w-64 h-64 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-white rounded-full opacity-80 animate-pulse"></div>
+                  <img 
+                    src="/lovable-uploads/e7a07023-1ccc-4571-87da-8ee437ae569a.png" 
+                    alt="IIIT Vadodara Logo" 
+                    className="relative z-10 w-56 h-56 object-contain"
+                  />
+                </div>
+              </div>
+              <div className="text-center mt-4">
+                <h3 className="text-xl font-medium text-compass-800">Indian Institute of Information Technology</h3>
+                <p className="text-compass-600 font-medium">Vadodara</p>
+              </div>
             </div>
             <div className="absolute -bottom-6 -right-6 bg-white p-4 rounded-lg shadow-lg border border-gray-100 animate-fade-in">
               <div className="flex items-center space-x-3">
@@ -45,6 +55,14 @@ const Index = () => {
                   <p className="font-medium text-gray-800">93% of students</p>
                   <p className="text-sm text-gray-500">found their ideal path</p>
                 </div>
+              </div>
+            </div>
+            <div className="absolute -top-4 -left-4 bg-white p-3 rounded-lg shadow-md border border-compass-100 animate-fade-in">
+              <div className="flex items-center space-x-2">
+                <div className="bg-compass-100 p-1.5 rounded-full">
+                  <GraduationCap className="h-5 w-5 text-compass-600" />
+                </div>
+                <p className="font-medium text-compass-700">Academic Excellence</p>
               </div>
             </div>
           </div>
