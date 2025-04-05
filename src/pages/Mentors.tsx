@@ -144,8 +144,8 @@ const Mentors = () => {
   const [mentors, setMentors] = useState(mockMentors);
   const [mentorshipRequests, setMentorshipRequests] = useState(mockMentorshipRequests);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterDepartment, setFilterDepartment] = useState("");
-  const [filterAvailability, setFilterAvailability] = useState("");
+  const [filterDepartment, setFilterDepartment] = useState("all");
+  const [filterAvailability, setFilterAvailability] = useState("all");
   const [filterExpertise, setFilterExpertise] = useState("");
   const [mentorRequesting, setMentorRequesting] = useState<any>(null);
   const [requestMessage, setRequestMessage] = useState("");
@@ -188,10 +188,10 @@ const Mentors = () => {
       mentor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       mentor.expertise.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase()));
       
-    const matchesDepartment = filterDepartment === "" || 
+    const matchesDepartment = filterDepartment === "all" || 
       mentor.department === filterDepartment;
       
-    const matchesAvailability = filterAvailability === "" || 
+    const matchesAvailability = filterAvailability === "all" || 
       mentor.availability === filterAvailability;
       
     const matchesExpertise = filterExpertise === "" || 
@@ -232,7 +232,7 @@ const Mentors = () => {
                       <SelectValue placeholder="Department" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Departments</SelectItem>
+                      <SelectItem value="all">All Departments</SelectItem>
                       <SelectItem value="Computer Science">Computer Science</SelectItem>
                       <SelectItem value="Electrical Engineering">Electrical Engineering</SelectItem>
                       <SelectItem value="Data Science">Data Science</SelectItem>
@@ -246,7 +246,7 @@ const Mentors = () => {
                       <SelectValue placeholder="Availability" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">Any Availability</SelectItem>
+                      <SelectItem value="all">Any Availability</SelectItem>
                       <SelectItem value="High">High</SelectItem>
                       <SelectItem value="Moderate">Moderate</SelectItem>
                       <SelectItem value="Low">Low</SelectItem>
@@ -255,8 +255,8 @@ const Mentors = () => {
                   
                   <Button variant="outline" className="md:w-auto" onClick={() => {
                     setSearchTerm("");
-                    setFilterDepartment("");
-                    setFilterAvailability("");
+                    setFilterDepartment("all");
+                    setFilterAvailability("all");
                     setFilterExpertise("");
                   }}>
                     <Filter className="mr-2 h-4 w-4" /> Reset
