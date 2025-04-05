@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
               <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
             </svg>
           </div>
-          <span className="text-2xl font-bold text-compass-700">Compass</span>
+          <span className="text-2xl font-bold text-compass-700">Loopholes</span>
         </Link>
         
         {/* Desktop Nav Links */}

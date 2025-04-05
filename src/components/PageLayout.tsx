@@ -39,7 +39,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                     <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
                   </svg>
                 </div>
-                <span className="font-bold text-compass-700">Compass</span>
+                <span className="font-bold text-compass-700">Loopholes</span>
               </div>
               <p className="text-sm text-gray-500 mt-1">Your Academic Pathway Planner</p>
             </div>
@@ -51,7 +51,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
             </div>
           </div>
           <div className="text-center mt-6 text-sm text-gray-500">
-            © {new Date().getFullYear()} Compass. All rights reserved.
+            © {new Date().getFullYear()} Loopholes. All rights reserved.
           </div>
         </div>
       </footer>
