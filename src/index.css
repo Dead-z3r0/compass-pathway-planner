@@ -102,4 +102,50 @@
   .compass-button {
     @apply bg-compass-600 hover:bg-compass-700 text-white py-2 px-4 rounded-md transition-colors duration-200;
   }
+
+  /* Styling for the Gemini AI-generated content */
+  .roadmap-content {
+    @apply text-gray-800;
+  }
+  
+  .roadmap-content h1, 
+  .roadmap-content h2, 
+  .roadmap-content h3 {
+    @apply font-bold my-3;
+  }
+  
+  .roadmap-content ul, 
+  .roadmap-content ol {
+    @apply my-2 pl-5;
+  }
+  
+  .roadmap-content ul {
+    @apply list-disc;
+  }
+  
+  .roadmap-content ol {
+    @apply list-decimal;
+  }
+  
+  .roadmap-content li {
+    @apply my-1;
+  }
+  
+  .roadmap-content a {
+    @apply text-compass-600 hover:underline;
+  }
+  
+  .roadmap-content b, 
+  .roadmap-content strong {
+    @apply font-bold;
+  }
+  
+  .roadmap-content i, 
+  .roadmap-content em {
+    @apply italic;
+  }
+  
+  .roadmap-content div[style*="border: 1px solid"] {
+    @apply rounded-lg shadow-sm;
+  }
 }

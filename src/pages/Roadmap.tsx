@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,7 +13,7 @@ import { Progress } from "@/components/ui/progress";
 import { ChevronRight, Clock, Calendar, BookOpen, Award, Users, ArrowRight } from 'lucide-react';
 import PageLayout from '@/components/PageLayout';
 
-// Mock data for the roadmap
+// Mock data for the roadmap (will be replaced with actual data from Gemini)
 const mockRoadmapData = {
   name: "Alex Johnson",
   major: "Computer Science",
@@ -126,6 +125,27 @@ const mockRoadmapData = {
 
 const Roadmap = () => {
   const [activeTab, setActiveTab] = useState("overview");
+  const [roadmapHtml, setRoadmapHtml] = useState<string | null>(null);
+  const [userData, setUserData] = useState<any>(null);
+  
+  useEffect(() => {
+    // Retrieve the generated roadmap from localStorage
+    const storedRoadmap = localStorage.getItem('generatedRoadmap');
+    const storedUserData = localStorage.getItem('userData');
+    
+    if (storedRoadmap) {
+      setRoadmapHtml(storedRoadmap);
+    }
+    
+    if (storedUserData) {
+      try {
+        const parsedData = JSON.parse(storedUserData);
+        setUserData(parsedData);
+      } catch (err) {
+        console.error('Error parsing user data:', err);
+      }
+    }
+  }, []);
 
   return (
     <PageLayout 
@@ -143,8 +163,12 @@ const Roadmap = () => {
             <CardContent>
               <div className="space-y-6">
                 <div>
-                  <h3 className="font-medium text-gray-900">{mockRoadmapData.name}</h3>
-                  <p className="text-sm text-gray-500">{mockRoadmapData.major}</p>
+                  <h3 className="font-medium text-gray-900">
+                    {userData?.name || mockRoadmapData.name}
+                  </h3>
+                  <p className="text-sm text-gray-500">
+                    {userData?.major || mockRoadmapData.major}
+                  </p>
                 </div>
                 
                 <div>
@@ -158,7 +182,9 @@ const Roadmap = () => {
                 <div className="pt-2 space-y-3">
                   <h4 className="text-sm font-medium">Short-term Goals</h4>
                   <ul className="space-y-2">
-                    {mockRoadmapData.shortTermGoals.map((goal, index) => (
+                    {(userData?.shortTermGoals 
+                      ? [userData.shortTermGoals] 
+                      : mockRoadmapData.shortTermGoals).map((goal: string, index: number) => (
                       <li key={index} className="flex items-start text-sm">
                         <ChevronRight className="h-4 w-4 mr-2 text-compass-500 shrink-0 mt-0.5" />
                         <span>{goal}</span>
@@ -170,7 +196,9 @@ const Roadmap = () => {
                 <div className="pt-2 space-y-3">
                   <h4 className="text-sm font-medium">Long-term Goals</h4>
                   <ul className="space-y-2">
-                    {mockRoadmapData.longTermGoals.map((goal, index) => (
+                    {(userData?.longTermGoals 
+                      ? [userData.longTermGoals] 
+                      : mockRoadmapData.longTermGoals).map((goal: string, index: number) => (
                       <li key={index} className="flex items-start text-sm">
                         <ChevronRight className="h-4 w-4 mr-2 text-compass-500 shrink-0 mt-0.5" />
                         <span>{goal}</span>
@@ -214,89 +242,98 @@ const Roadmap = () => {
                   <TabsTrigger value="resources">Resources</TabsTrigger>
                 </TabsList>
                 
-                {/* Overview Tab */}
+                {/* Overview Tab - Now with Gemini-generated content */}
                 <TabsContent value="overview" className="space-y-6">
-                  <div>
-                    <h3 className="text-lg font-medium mb-3">Upcoming Activities</h3>
-                    <div className="space-y-3">
-                      {mockRoadmapData.recommendedActivities.slice(0, 2).map(activity => (
-                        <Card key={activity.id} className="bg-white border border-gray-100">
-                          <CardContent className="p-4">
-                            <div className="flex justify-between items-start">
-                              <div>
-                                <h4 className="font-medium">{activity.name}</h4>
-                                <p className="text-sm text-gray-600 mt-1">{activity.description}</p>
-                              </div>
-                              <div className="bg-compass-100 px-2 py-1 rounded text-xs text-compass-700">
-                                {activity.relevance} Relevance
-                              </div>
-                            </div>
-                            <div className="flex items-center mt-3 text-sm text-gray-500">
-                              <Clock className="h-4 w-4 mr-1" />
-                              <span>{activity.date}</span>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                      <Button variant="ghost" size="sm" className="text-compass-600">
-                        View All Activities
-                      </Button>
+                  {roadmapHtml ? (
+                    <div className="roadmap-content prose max-w-none" 
+                         dangerouslySetInnerHTML={{ __html: roadmapHtml }}>
                     </div>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-lg font-medium mb-3">Recommended Courses</h3>
-                    <div className="space-y-3">
-                      {mockRoadmapData.recommendedCourses.slice(0, 2).map(course => (
-                        <Card key={course.id} className="bg-white border border-gray-100">
-                          <CardContent className="p-4">
-                            <div className="flex justify-between items-start">
-                              <div>
-                                <h4 className="font-medium">{course.name}</h4>
-                                <p className="text-sm text-gray-600 mt-1">{course.description}</p>
-                              </div>
-                              <div className="bg-compass-100 px-2 py-1 rounded text-xs text-compass-700">
-                                {course.relevance} Relevance
-                              </div>
-                            </div>
-                            <div className="flex items-center mt-3 text-sm text-gray-500">
-                              <Calendar className="h-4 w-4 mr-1" />
-                              <span>{course.semester}</span>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                      <Button variant="ghost" size="sm" className="text-compass-600">
-                        View All Courses
-                      </Button>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-lg font-medium mb-3">Featured Resources</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {mockRoadmapData.resources.slice(0, 2).map(resource => (
-                        <Card key={resource.id} className="bg-white border border-gray-100">
-                          <CardContent className="p-4">
-                            <div className="flex items-start">
-                              <div className="bg-compass-100 p-2 rounded mr-3">
-                                <BookOpen className="h-4 w-4 text-compass-600" />
-                              </div>
-                              <div>
-                                <h4 className="font-medium text-sm">{resource.title}</h4>
-                                <p className="text-xs text-gray-500 mt-1">
-                                  {resource.type} • {resource.provider}
-                                </p>
-                              </div>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
-                    <Button variant="ghost" size="sm" className="text-compass-600 mt-3">
-                      View All Resources
-                    </Button>
-                  </div>
+                  ) : (
+                    // Fallback to the existing overview UI if no generated content
+                    <>
+                      <div>
+                        <h3 className="text-lg font-medium mb-3">Upcoming Activities</h3>
+                        <div className="space-y-3">
+                          {mockRoadmapData.recommendedActivities.slice(0, 2).map(activity => (
+                            <Card key={activity.id} className="bg-white border border-gray-100">
+                              <CardContent className="p-4">
+                                <div className="flex justify-between items-start">
+                                  <div>
+                                    <h4 className="font-medium">{activity.name}</h4>
+                                    <p className="text-sm text-gray-600 mt-1">{activity.description}</p>
+                                  </div>
+                                  <div className="bg-compass-100 px-2 py-1 rounded text-xs text-compass-700">
+                                    {activity.relevance} Relevance
+                                  </div>
+                                </div>
+                                <div className="flex items-center mt-3 text-sm text-gray-500">
+                                  <Clock className="h-4 w-4 mr-1" />
+                                  <span>{activity.date}</span>
+                                </div>
+                              </CardContent>
+                            </Card>
+                          ))}
+                          <Button variant="ghost" size="sm" className="text-compass-600">
+                            View All Activities
+                          </Button>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-medium mb-3">Recommended Courses</h3>
+                        <div className="space-y-3">
+                          {mockRoadmapData.recommendedCourses.slice(0, 2).map(course => (
+                            <Card key={course.id} className="bg-white border border-gray-100">
+                              <CardContent className="p-4">
+                                <div className="flex justify-between items-start">
+                                  <div>
+                                    <h4 className="font-medium">{course.name}</h4>
+                                    <p className="text-sm text-gray-600 mt-1">{course.description}</p>
+                                  </div>
+                                  <div className="bg-compass-100 px-2 py-1 rounded text-xs text-compass-700">
+                                    {course.relevance} Relevance
+                                  </div>
+                                </div>
+                                <div className="flex items-center mt-3 text-sm text-gray-500">
+                                  <Calendar className="h-4 w-4 mr-1" />
+                                  <span>{course.semester}</span>
+                                </div>
+                              </CardContent>
+                            </Card>
+                          ))}
+                          <Button variant="ghost" size="sm" className="text-compass-600">
+                            View All Courses
+                          </Button>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-medium mb-3">Featured Resources</h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {mockRoadmapData.resources.slice(0, 2).map(resource => (
+                            <Card key={resource.id} className="bg-white border border-gray-100">
+                              <CardContent className="p-4">
+                                <div className="flex items-start">
+                                  <div className="bg-compass-100 p-2 rounded mr-3">
+                                    <BookOpen className="h-4 w-4 text-compass-600" />
+                                  </div>
+                                  <div>
+                                    <h4 className="font-medium text-sm">{resource.title}</h4>
+                                    <p className="text-xs text-gray-500 mt-1">
+                                      {resource.type} • {resource.provider}
+                                    </p>
+                                  </div>
+                                </div>
+                              </CardContent>
+                            </Card>
+                          ))}
+                        </div>
+                        <Button variant="ghost" size="sm" className="text-compass-600 mt-3">
+                          View All Resources
+                        </Button>
+                      </div>
+                    </>
+                  )}
                 </TabsContent>
                 
                 {/* Courses Tab */}
