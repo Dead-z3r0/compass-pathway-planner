@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -32,9 +31,9 @@ const Index = () => {
           <div className="relative">
             <div className="bg-compass-100 rounded-xl p-6 relative z-10">
               <img 
-                src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80" 
-                alt="Students planning their academic journey" 
-                className="rounded-lg shadow-lg"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKMyA9BLkZgoHUszWAZcZyFwEJJZOM0EuHIA&s" 
+                alt="IIIT Vadodara Logo" 
+                className="rounded-lg shadow-lg mx-auto"
               />
             </div>
             <div className="absolute -bottom-6 -right-6 bg-white p-4 rounded-lg shadow-lg border border-gray-100 animate-fade-in">

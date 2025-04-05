@@ -42,6 +42,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                 <span className="font-bold text-compass-700">Loopholes</span>
               </div>
               <p className="text-sm text-gray-500 mt-1">Your Academic Pathway Planner</p>
+              <p className="text-xs text-gray-500 mt-1">CREATED BY ABHISHEK, DARSHAN, NIVEDITA, JAINAM</p>
             </div>
             <div className="flex space-x-6">
               <a href="#" className="text-gray-600 hover:text-compass-600">About</a>
